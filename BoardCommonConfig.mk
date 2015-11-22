@@ -30,8 +30,14 @@ TARGET_ARCH_VARIANT_CPU := cortex-a9
 TARGET_CPU_VARIANT := cortex-a9
 ARCH_ARM_HAVE_NEON := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
-TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
-TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+
+# Specify L1/L2 caches used for Exynos 4412
+BOARD_GLOBAL_CFLAGS += --param l1-cache-line-size=32 --param l1-cache-size=32 --param l2-cache-size=1024
+BOARD_GLOBAL_CPPFLAGS += --param l1-cache-line-size=32 --param l1-cache-size=32 --param l2-cache-size=1024
+
+# Compatibility fallback, BOARD_GLOBAL_CFLAGS requires proper support in android_build
+TARGET_GLOBAL_CFLAGS += $(BOARD_GLOBAL_CFLAGS)
+TARGET_GLOBAL_CPPFLAGS += $(BOARD_GLOBAL_CPPFLAGS)
 
 EXYNOS4X12_ENHANCEMENTS := true
 EXYNOS4_ENHANCEMENTS := true
